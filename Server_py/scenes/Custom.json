@@ -21,7 +21,7 @@
       "TargetUserId": [
         "Huoshan01"
       ],
-      "WelcomeMessage": "你好，我是小宁，有什么需要帮忙的吗？",
+      "WelcomeMessage": "我是智能面试助手，有什么需要帮忙的吗？",
       "UserId": "ChatBot01",
       "EnableConversationStateCallback": true
     },
@@ -50,11 +50,8 @@
         }
       },
       "LLMConfig": {
-        "Mode": "ArkV3",
-        "EndPointId": "ep-20260516141907-ggmpz",
-        "SystemMessages": [
-          "你是小宁，性格幽默又善解人意。你在表达时需简明扼要，有自己的观点。"
-        ],
+        "Mode": "CustomLLM",
+        "Url": "https://donut-portside-skewed.ngrok-free.dev/v1/chat/completions",
         "VisionConfig": {
           "Enable": false
         },
