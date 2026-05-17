@@ -12,7 +12,7 @@
 **Node 版本: 16.0+**
 
 ### 1. 运行环境
-需要准备两个 Terminal，分别启动服务端和前端页面。
+需要准备三个 Terminal，分别启动服务端、LLM服务和前端页面。
 
 ### 2. 服务开通
 开通 ASR、TTS、LLM、RTC 等服务，可参考 [开通服务](https://www.volcengine.com/docs/6348/1315561?s=g) 进行相关服务的授权与开通。
@@ -33,20 +33,25 @@ Demo 中以 `Custom` 场景为例，您可以自行新增场景。
 - `VoiceChat`: 场景下的 AIGC 配置。
     - 可参考 https://www.volcengine.com/docs/6348/1558163 中参数描述，完整填写参数内容。
     - 可通过 [快速跑通 Demo](https://console.volcengine.com/rtc/aigc/run?s=g) 快速获取参数, 跑通后点击右上角 `接入 API` 按钮复制相关代码贴到 JSON 配置文件中即可。
+- 
 ## 快速开始
 请注意，服务端和 Web 端都需要启动, 启动步骤如下:
 ### 服务端
-进到项目根目录
+进到项目后台根目录
 #### 安装依赖
 ```shell
-cd Server
-yarn
+cd Server_py
+pip install -r requirements.txt
 ```
 #### 运行项目
 ```shell
-yarn dev
+python app.py
 ```
-
+进到项目LLM服务根目录
+```shell
+cd LLServer
+pip install -r requirements.txt
+```
 ### 前端页面
 进到项目根目录
 #### 安装依赖
@@ -55,7 +60,7 @@ yarn
 ```
 #### 运行项目
 ```shell
-yarn dev
+npm run dev
 ```
 
 ### 常见问题
