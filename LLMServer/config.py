@@ -37,7 +37,7 @@ VIKING_KB_SEARCH_PATH = _get(
 
 # ---------------- 服务 ----------------
 SERVER_HOST = _get("SERVER_HOST", "0.0.0.0")
-SERVER_PORT = int(_get("SERVER_PORT", "3002"))
+SERVER_PORT = int(_get("SERVER_PORT", "3000"))
 LOG_LEVEL = _get("LOG_LEVEL", "INFO")
 
 

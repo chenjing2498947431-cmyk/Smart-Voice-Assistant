@@ -11,8 +11,14 @@ from fastapi.middleware.cors import CORSMiddleware
 import config
 from debug_routes import router as debug_router
 from llm.router import router as llm_router
+from storage import sqlite as storage
 
 app = FastAPI(title="LLM RAG Server", version="1.0.0")
+
+
+@app.on_event("startup")
+async def _init_storage():
+    await storage.init_db()
 
 app.add_middleware(
     CORSMiddleware,

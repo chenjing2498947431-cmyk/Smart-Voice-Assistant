@@ -281,6 +281,10 @@ export const roomSlice = createSlice({
     clearHistoryMsg: (state) => {
       state.msgHistory = [];
     },
+    setMsgHistory: (state, { payload }: { payload: Msg[] }) => {
+      // 整段替换, 用于从 DB 回放旧会话
+      state.msgHistory = payload;
+    },
     setHistoryMsg: (state, { payload }) => {
       const { paragraph, definite } = payload;
       const lastMsg = state.msgHistory.at(-1)! || {};
@@ -380,6 +384,7 @@ export const {
   updateAIThinkState,
   setHistoryMsg,
   clearHistoryMsg,
+  setMsgHistory,
   clearCurrentMsg,
   setInterruptMsg,
   updateNetworkQuality,

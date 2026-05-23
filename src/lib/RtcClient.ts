@@ -356,14 +356,18 @@ export class RTCClient {
 
   /**
    * @brief 启用 AIGC
+   * @param scene 场景 id
+   * @param resumeSessionId 可选, 续聊已有会话时传; 不传则由 Server_py 自动建新 context
    */
-  startAgent = async (scene: string) => {
+  startAgent = async (scene: string, resumeSessionId?: string) => {
     if (this.audioBotEnabled) {
       await this.stopAgent(scene);
     }
-    await Apis.VoiceChat.StartVoiceChat({
-      SceneID: scene,
-    });
+    const payload: Record<string, any> = { SceneID: scene };
+    if (resumeSessionId) {
+      payload.ResumeSessionId = resumeSessionId;
+    }
+    await Apis.VoiceChat.StartVoiceChat(payload);
     this.audioBotEnabled = true;
     this.audioBotStartTime = Date.now();
   };

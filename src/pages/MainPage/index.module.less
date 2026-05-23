@@ -14,7 +14,9 @@
 
   .mainArea {
     position: relative;
-    width: calc(100% - 220px);
+    // 220px Menu + 240px HistorySidebar + 间距; flex 收缩, 不再硬编码 100% - 220px
+    flex: 1;
+    min-width: 0;
     height: 100%;
     margin-right: 2%;
     background-color: white;

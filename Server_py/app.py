@@ -8,9 +8,12 @@ AIGC Server (FastAPI 版本)
     GET/POST /getScenes                  获取本地 scenes/*.json 场景配置
 """
 
+import copy
 import json
+import os
 import time
 import uuid
+from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 
 import httpx
 import uvicorn
@@ -23,6 +26,39 @@ from token_manager import AccessToken, Privileges
 from util import assert_, read_files, wrapped_response_async
 
 Scenes = read_files('./scenes', '.json')
+
+# LLMServer 内网地址。RTC 看到的是 LLMConfig.Url 里的公网 ngrok 地址,
+# 但 Server_py 自己调 /v1/context/create 走本机直连更快也更稳。
+LLM_SERVER_INTERNAL_URL = os.environ.get('LLM_SERVER_INTERNAL_URL', 'http://localhost:3000')
+
+
+async def _create_llm_context() -> str | None:
+    """启动通话前调一次 LLMServer 建 session, 失败返回 None (降级不阻塞通话)。"""
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            resp = await client.post(
+                f'{LLM_SERVER_INTERNAL_URL.rstrip("/")}/v1/context/create',
+                json={},
+            )
+        if resp.status_code >= 400:
+            print(f'[ctx] /v1/context/create HTTP {resp.status_code}: {resp.text[:200]}')
+            return None
+        ctx = (resp.json() or {}).get('context_id')
+        if not ctx:
+            print(f'[ctx] LLMServer 没返回 context_id: {resp.text[:200]}')
+            return None
+        return ctx
+    except Exception as e:
+        print(f'[ctx] 创建 context 失败 (降级为无 session): {e}')
+        return None
+
+
+def _inject_context_id_into_url(url: str, context_id: str) -> str:
+    """把 context_id 作为 query string 拼到 LLMConfig.Url 上, 已有同名 key 会被覆盖。"""
+    parsed = urlparse(url)
+    query = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    query['context_id'] = context_id
+    return urlunparse(parsed._replace(query=urlencode(query)))
 
 app = FastAPI(title='AIGC Server (Python)', version='1.0.0')
 
@@ -68,7 +104,26 @@ async def proxy(request: Request):
 
         body = {}
         if action == 'StartVoiceChat':
-            body = voice_chat
+            # 深拷贝避免污染内存中的 Scenes (后续会话还要复用原配置)
+            body = copy.deepcopy(voice_chat)
+            llm_cfg = (
+                body.setdefault('Config', {})
+                    .setdefault('LLMConfig', {})
+            )
+            llm_url = llm_cfg.get('Url')
+            if llm_url:
+                # 前端如果指定了 ResumeSessionId, 直接用它续聊;
+                # 否则调 LLMServer 新建一个 context。
+                ctx_id = (body_json.get('ResumeSessionId') or '').strip()
+                if ctx_id:
+                    print(f'[ctx] 续聊 context_id={ctx_id} (前端指定)')
+                else:
+                    ctx_id = await _create_llm_context()
+                    if ctx_id:
+                        print(f'[ctx] 新建 context_id={ctx_id}')
+                if ctx_id:
+                    llm_cfg['Url'] = _inject_context_id_into_url(llm_url, ctx_id)
+                # 拿不到 context_id 就保持原 URL, LLMServer 会走 stateless 分支
         elif action == 'StopVoiceChat':
             app_id = voice_chat.get('AppId')
             room_id = voice_chat.get('RoomId')

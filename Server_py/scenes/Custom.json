@@ -1,7 +1,7 @@
 {
   "SceneConfig": {
     "icon": "https://lf3-rtc-demo.volccdn.com/obj/rtc-aigc-assets/DoubaoAvatar.png",
-    "name": "自定义助手"
+    "name": "面试助手"
   },
   "AccountConfig": {
     "accessKeyId": "AKLTMjRiMmEyN2VhMjk1NDU3MGE3YjNmOTdkYTZmYTVhNzc",
@@ -11,7 +11,7 @@
     "AppId": "6a07de1b6e9c9a01e150327c",
     "RoomId": "ChatRoom01",
     "UserId": "Huoshan01",
-    "Token": "0016a07de1b6e9c9a01e150327cSQDCVv4E4g8IamJKEWoKAENoYXRSb29tMDEJAEh1b3NoYW4wMQYAAABiShFqAQBiShFqAgBiShFqAwBiShFqBABiShFqBQBiShFqIADOn1gl0s5nEsuLKz0z1BhuFqUeQlqf+ArQKMwY+PlmBg=="
+    "Token": "0016a07de1b6e9c9a01e150327cSQAUkpMC6VERammMGmoKAENoYXRSb29tMDEJAEh1b3NoYW4wMQYAAABpjBpqAQBpjBpqAgBpjBpqAwBpjBpqBABpjBpqBQBpjBpqIAAE8ix2EKukveAiC+KOymgYN3wGGDeoCoEQupo3X2WK1Q=="
   },
   "VoiceChat": {
     "AppId": "6a07de1b6e9c9a01e150327c",

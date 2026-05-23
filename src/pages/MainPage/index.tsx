@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import Header from '@/components/Header';
 import ResizeWrapper from '@/components/ResizeWrapper';
 import Menu from './Menu';
+import HistorySidebar from './HistorySidebar';
 import { useIsMobile } from '@/utils/utils';
 import Apis from '@/app/index';
 import MainArea from './MainArea';
@@ -68,6 +69,7 @@ export default function () {
           padding: useIsMobile() ? '' : '24px',
         }}
       >
+        {useIsMobile() ? null : <HistorySidebar />}
         <div className={`${styles.mainArea} ${useIsMobile() ? styles.isMobile : ''}`}>
           <MainArea />
         </div>

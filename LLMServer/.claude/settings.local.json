@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import ast; [ast.parse\\(open\\(f, encoding='utf-8'\\).read\\(\\)\\) for f in ['llm/router.py','llm/ark_client.py','rag/prompt.py']]; print\\('OK'\\)\")",
+      "Bash(python -c \"import volcenginesdkarkruntime; print\\(volcenginesdkarkruntime.__version__ if hasattr\\(volcenginesdkarkruntime, '__version__'\\) else 'installed'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('app.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(python -c \"import ast; [ast.parse\\(open\\(f, encoding='utf-8'\\).read\\(\\)\\) for f in ['llm/router.py']]; print\\('OK'\\)\")",
+      "Bash(python -c \"from volcenginesdkarkruntime import Ark; print\\('SDK OK'\\)\")",
+      "PowerShell(conda run -n langchain python -c \"from volcenginesdkarkruntime import Ark; print\\('OK', Ark\\)\" 2>&1)",
+      "Bash(curl -s -o NUL -w \"HTTP %{http_code}\\\\n\" http://localhost:3002/)",
+      "Bash(curl -s http://localhost:3002/openapi.json)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('\\\\n'.join\\(d.get\\('paths',{}\\).keys\\(\\)\\)\\)\")",
+      "Bash(netstat -ano)",
+      "Bash(conda run -n langchain python -c ' *)",
+      "Bash(ls \"D:/Anaconda3/envs/langchain/Lib/site-packages/volcenginesdkarkruntime/resources/context/\" 2>&1)",
+      "Bash(grep -rn \"TruncationStrategy\\\\|rolling_tokens\\\\|last_history\" \"D:/Anaconda3/envs/langchain/Lib/site-packages/volcenginesdkarkruntime/types/\" 2>&1 | head -30)",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/context/create -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260516141907-ggmpz\",\"mode\":\"session\",\"messages\":[{\"role\":\"system\",\"content\":\"hi\"}],\"truncation_strategy\":{\"type\":\"last_history_tokens\",\"last_history_tokens\":4096}}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/context/create -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260516141907-ggmpz\",\"mode\":\"session\",\"messages\":[{\"role\":\"system\",\"content\":\"hi\"}],\"truncation_strategy\":{\"type\":\"rolling_tokens\",\"rolling_tokens\":true}}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/context/create -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260516141907-ggmpz\",\"mode\":\"common_prefix\",\"messages\":[{\"role\":\"system\",\"content\":\"hi\"}]}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/context/create -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260523171614-bfhcd\",\"mode\":\"session\",\"messages\":[{\"role\":\"system\",\"content\":\"hi\"}],\"truncation_strategy\":{\"type\":\"last_history_tokens\",\"last_history_tokens\":4096}}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/context/create -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260523171614-bfhcd\",\"mode\":\"session\",\"messages\":[{\"role\":\"system\",\"content\":\"hi\"}],\"truncation_strategy\":{\"type\":\"rolling_tokens\",\"rolling_tokens\":true}}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/context/create -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260523171614-bfhcd\",\"mode\":\"common_prefix\",\"messages\":[{\"role\":\"system\",\"content\":\"hi\"}]}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/chat/completions -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260523171614-bfhcd\",\"messages\":[{\"role\":\"user\",\"content\":\"说'\\\\''好的'\\\\''\"}],\"max_tokens\":10}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' -X POST https://ark.cn-beijing.volces.com/api/v3/chat/completions -H 'Authorization: Bearer ark-57e46953-715f-4f32-8205-31c48bb1960d-d4f5c' -H 'Content-Type: application/json' -d '{\"model\":\"ep-20260523171614-bfhcd\",\"messages\":[{\"role\":\"user\",\"content\":\"say ok\"}],\"max_tokens\":10}')",
+      "Bash(D:/Anaconda3/envs/langchain/python.exe _probe_responses.py)",
+      "Bash(D:/Anaconda3/envs/langchain/python.exe -c \"import ast; [ast.parse\\(open\\(f, encoding='utf-8'\\).read\\(\\)\\) for f in ['llm/router.py','llm/ark_client.py','llm/session_manager.py']]; print\\('syntax OK'\\)\")",
+      "Bash(curl -s http://localhost:3000/openapi.json)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('\\\\n'.join\\(sorted\\(d.get\\('paths',{}\\).keys\\(\\)\\)\\)\\)\")",
+      "Bash(curl -s -X POST http://localhost:3000/v1/context/create -H \"Content-Type: application/json\" -d \"{}\")",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('reply:', d.get\\('choices',[{}]\\)[0].get\\('message',{}\\).get\\('content',''\\)\\); print\\('resp_id:', d.get\\('_response_id'\\)\\); print\\('prev:', d.get\\('_previous_response_id'\\)\\)\")",
+      "Bash(D:/Anaconda3/envs/langchain/python.exe -c \"import ast; [ast.parse\\(open\\(f, encoding='utf-8'\\).read\\(\\)\\) for f in ['app.py','llm/router.py','llm/ark_client.py','llm/session_manager.py','storage/sqlite.py']]; print\\('syntax OK'\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(D:/sorftWare_package/anaconda/Library/bin/npx.cmd tsc *)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(node ./node_modules/typescript/bin/tsc --noEmit)",
+      "Bash(echo \"EXIT=$?\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -m 3 http://localhost:3000/openapi.json)"
+    ]
+  }
+}

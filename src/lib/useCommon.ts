@@ -16,6 +16,8 @@ import {
   updateAIGCState,
   updateLocalUser,
 } from '@/store/slices/room';
+import { setCurrentSid, setConversations } from '@/store/slices/history';
+import * as llmApi from '@/lib/llmServerApi';
 
 import useRtcListeners from '@/lib/listenerHooks';
 import { RootState } from '@/store';
@@ -168,6 +170,10 @@ export const useJoin = (): [
 ] => {
   const devicePermissions = useSelector((state: RootState) => state.device.devicePermissions);
   const room = useSelector((state: RootState) => state.room);
+  const currentSid = useSelector((state: RootState) => state.history.currentSid);
+  // useRef 让闭包能拿到最新值, 不被首次渲染的快照锁死
+  const currentSidRef = useRef(currentSid);
+  currentSidRef.current = currentSid;
 
   const dispatch = useDispatch();
 
@@ -176,13 +182,35 @@ export const useJoin = (): [
   const [joining, setJoining] = useState(false);
   const listeners = useRtcListeners();
 
+  /**
+   * 确保有一个 sid 用于本次通话:
+   * - history.currentSid 有值 → 续聊 (侧栏已经把历史灌进 msgHistory)
+   * - 没有 → 现场向 LLMServer 申请, 写进 store, 顺便刷一次列表让侧栏能看到
+   */
+  const ensureSessionId = async (): Promise<string> => {
+    if (currentSidRef.current) return currentSidRef.current;
+    try {
+      const sid = await llmApi.createContext();
+      dispatch(setCurrentSid(sid));
+      llmApi
+        .listConversations()
+        .then((list) => dispatch(setConversations(list)))
+        .catch(() => {});
+      return sid;
+    } catch (e) {
+      console.warn('[history] 创建 context 失败, 退回 stateless 模式', e);
+      return '';
+    }
+  };
+
   const handleAIGCModeStart = async () => {
+    const sid = await ensureSessionId();
     if (room.isAIGCEnable) {
       await RtcClient.stopAgent(id);
       dispatch(clearCurrentMsg());
-      await RtcClient.startAgent(id);
+      await RtcClient.startAgent(id, sid || undefined);
     } else {
-      await RtcClient.startAgent(id);
+      await RtcClient.startAgent(id, sid || undefined);
     }
     dispatch(updateAIGCState({ isAIGCEnable: true }));
   };
@@ -268,5 +296,10 @@ export const useLeave = () => {
     dispatch(clearCurrentMsg());
     dispatch(localLeaveRoom());
     dispatch(updateAIGCState({ isAIGCEnable: false }));
+    // 通话结束后顺手刷一次列表, 让侧栏看到 last_message / updated_at 的更新
+    llmApi
+      .listConversations()
+      .then((list) => dispatch(setConversations(list)))
+      .catch(() => {});
   };
 };

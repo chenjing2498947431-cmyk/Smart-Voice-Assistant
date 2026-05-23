@@ -66,8 +66,9 @@ function Conversation(props: React.HTMLAttributes<HTMLDivElement> & { showSubtit
         ''
       )}
       {(showSubtitle ? msgHistory : [])?.map(({ value, user, isInterrupted }, index) => {
-        const isUserMsg = user === userId;
-        const isRobotMsg = user === botName || user.includes('voiceChat_');
+        // 'user' / 'assistant' 是从 DB 回放历史时打的标签, 兼容一下
+        const isUserMsg = user === userId || user === 'user';
+        const isRobotMsg = user === botName || user.includes('voiceChat_') || user === 'assistant';
         if (!isUserMsg && !isRobotMsg) {
           return '';
         }

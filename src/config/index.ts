@@ -13,6 +13,11 @@ export const UserAgreement = 'https://www.volcengine.com/docs/6348/128955';
  */
 export const AIGC_PROXY_HOST = 'http://localhost:3001';
 
+/**
+ * @note LLMServer 地址 (历史对话 / session 缓存接口在这里)。
+ */
+export const LLM_SERVER_HOST = 'http://localhost:3000';
+
 export interface IScene {
   icon: string;
   name: string;
