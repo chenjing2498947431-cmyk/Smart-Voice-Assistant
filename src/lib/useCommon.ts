@@ -5,6 +5,13 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import CustomerServiceIcon from '@/assets/img/CustomerService.svg';
+
+/** 服务端下发的 icon 若非 http 链接，则用本地打包资源兜底 */
+export function resolveIcon(icon?: string): string {
+  if (!icon || !icon.startsWith('http')) return CustomerServiceIcon;
+  return icon;
+}
 import VERTC, { MediaType } from '@volcengine/rtc';
 import { Modal } from '@arco-design/web-react';
 import RtcClient from '@/lib/RtcClient';
@@ -38,7 +45,8 @@ export interface FormProps {
 
 export const useScene = () => {
   const { scene, sceneConfigMap } = useSelector((state: RootState) => state.room);
-  return sceneConfigMap[scene] || {};
+  const config = sceneConfigMap[scene] || {};
+  return { ...config, icon: resolveIcon(config.icon) };
 }
 
 export const useRTC = () => {

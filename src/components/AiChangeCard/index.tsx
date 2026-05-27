@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import CheckScene from './CheckScene';
 import { SceneConfig, updateScene } from '@/store/slices/room';
-import { useScene } from '@/lib/useCommon';
+import { useScene, resolveIcon } from '@/lib/useCommon';
 import style from './index.module.less';
 
 function AIChangeCard() {
@@ -36,7 +36,7 @@ function AIChangeCard() {
         {Scenes.map((key: SceneConfig) =>
           <CheckScene
             key={key.name}
-            icon={key.icon}
+            icon={resolveIcon(key.icon)}
             title={key.name}
             checked={key.id === scene}
             onClick={() => handleChecked(key.id)}

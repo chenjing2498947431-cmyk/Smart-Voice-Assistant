@@ -1,6 +1,6 @@
 {
   "SceneConfig": {
-    "icon": "https://lf3-rtc-demo.volccdn.com/obj/rtc-aigc-assets/DoubaoAvatar.png",
+    "icon": "",
     "name": "面试助手"
   },
   "AccountConfig": {
@@ -21,7 +21,7 @@
       "TargetUserId": [
         "Huoshan01"
       ],
-      "WelcomeMessage": "我是智能面试助手，有什么需要帮忙的吗？",
+      "WelcomeMessage": "我是智能语音客服，有什么需要帮忙的吗？",
       "UserId": "ChatBot01",
       "EnableConversationStateCallback": true
     },

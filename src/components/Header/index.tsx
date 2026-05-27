@@ -3,11 +3,10 @@
  * SPDX-license-identifier: BSD-3-Clause
  */
 
-import { Button, Divider, Popover } from '@arco-design/web-react';
+import { Button, Popover } from '@arco-design/web-react';
 import { IconMenu } from '@arco-design/web-react/icon';
 import NetworkIndicator from '@/components/NetworkIndicator';
 import { useIsMobile } from '@/utils/utils';
-import Logo from '@/assets/img/Logo.svg';
 import styles from './index.module.less';
 
 const Disclaimer = 'https://www.volcengine.com/docs/6348/68916';
@@ -66,8 +65,6 @@ function Header(props: HeaderProps) {
             <IconMenu className={styles['header-setting-btn']} />
           </Popover>
         )}
-        <img src={Logo} alt="Logo" />
-        <Divider type="vertical" />
         <span className={styles['header-logo-text']}>实时对话式 AI 体验馆</span>
         <NetworkIndicator />
       </div>
